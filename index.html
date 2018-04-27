@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Caluclate your stock with your budget</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-cookies.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-sanitize.min.js"></script>
+    <script src="main.js"></script>
+</head>
+<body ng-controller="productsCtrl">
+    <form class="form-group" action="#">
+        <div class="container">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="text-center">
+                        <h3><b>STOCKCALCULUS.com</b></h3>
+                        <hr size="130px">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <label for="budgetAmt">Enter your budget Amount:</label>
+                    <input class="form-control form-control-sm" id="budgetAmt" ng-model="budgetAmt" ng-change="changedAmt(budgetAmt)" type="text" placeholder="{{ totalAmt() }}" ng-required="true">
+                    <br>
+                    <div class="alert alert-danger">
+                        <div>{{ message }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-auto">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price($)(per.stock)</th>
+                            <th>Qty</th>
+                            <th>Budget Amount($)(MRP X Qty)</th>
+                            <th>Weighted(%)</th>
+                        </thead>
+                        <tbody ng-repeat="product in data">
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.mrp }}</td>
+                            <td>{{ product.qty }}</td>
+                            <td ng-init="totalBudgetAmt = 2 ">{{ product.mrp * product.qty | number:2 }}</td>
+                            <td>{{ 100 * product.mrp / totalMRP() | number:2 }}</td>
+                        </tbody>
+                        <thead>
+                            <th></th>
+                            <th>Total</th>
+                            <th>{{ totalMRP() }}</th>
+                            <th></th>
+                            <th>{{ totalBudgetAmt }}</th>
+                            <th></th>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
